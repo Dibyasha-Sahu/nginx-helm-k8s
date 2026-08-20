@@ -101,130 +101,130 @@ Example:
 
 These values are used by Helm templates during deployment.
 
-templates/deployment.yaml
+## templates/deployment.yaml
 
 Defines the Kubernetes Deployment resource.
 
 It uses Helm variables instead of hardcoded values.
 
-Example:
+## Example:
 
-replicas: {{ .Values.replicaCount }}
+      replicas: {{ .Values.replicaCount }}
 
 Helm replaces these values from values.yaml during deployment.
 
-templates/service.yaml
+      templates/service.yaml
 
 Creates a Kubernetes Service to expose the Nginx application.
 
-🚀 Deployment Steps
-1. Create Kubernetes Cluster
+## 🚀 Deployment Steps
+## 1. Create Kubernetes Cluster
 
-Using Kind:
+      Using Kind:
+      
+      kind create cluster --name nginx-cluster
+      
+      Verify:
+      
+      kubectl get nodes
+## 2. Install Helm Chart
 
-kind create cluster --name nginx-cluster
+      Navigate to the project directory:
+      
+      cd nginx-helm-k8s
+      
+      Install the application:
+      
+      helm install nginx-app .
+## 3. Verify Deployment
 
-Verify:
+      Check Helm release:
+      
+      helm list
+      
+      Check Kubernetes pods:
+      
+      kubectl get pods
+      
+      Check service:
+      
+      kubectl get svc
+## 4. Access Nginx Application
 
-kubectl get nodes
-2. Install Helm Chart
-
-Navigate to the project directory:
-
-cd nginx-helm-k8s
-
-Install the application:
-
-helm install nginx-app .
-3. Verify Deployment
-
-Check Helm release:
-
-helm list
-
-Check Kubernetes pods:
-
-kubectl get pods
-
-Check service:
-
-kubectl get svc
-4. Access Nginx Application
-
-Forward the service port:
-
-kubectl port-forward svc/nginx-service 8080:80
-
-Open:
-
-http://localhost:8080
-
-Expected output:
-
-Welcome to nginx!
-🔄 Updating Deployment Using Helm
+      Forward the service port:
+      
+      kubectl port-forward svc/nginx-service 8080:80
+      
+      Open:
+      
+      http://localhost:8080
+      
+      Expected output:
+      
+      Welcome to nginx!
+## 🔄 Updating Deployment Using Helm
 
 One of the main advantages of Helm is updating applications without manually editing Kubernetes YAML files.
 
-Example:
+## Example:
 
-Change replica count in:
+      Change replica count in:
+      
+      values.yaml
+      
+      Before:
+      
+      replicaCount: 2
+      
+      After:
+      
+      replicaCount: 5
+      
+      Apply changes:
+      
+      helm upgrade nginx-app .
+      
+      Verify:
+      
+      kubectl get pods
+      
+      Helm automatically updates the Kubernetes deployment.
 
-values.yaml
+## 🔙 Helm Rollback
 
-Before:
+      Helm maintains deployment history.
+      
+      Check history:
+      
+      helm history nginx-app
+      
+      Rollback:
+      
+      helm rollback nginx-app 1
+## 🧹 Cleanup
 
-replicaCount: 2
+      Remove Helm deployment:
+      
+      helm uninstall nginx-app
+      
+      Delete Kubernetes cluster:
+      
+      kind delete cluster --name nginx-cluster
+## 📚 Key Learnings
 
-After:
+      Through this project, I learned:
+      
+      ✅ Creating and managing Helm charts
+      ✅ Difference between Kubernetes YAML and Helm templates
+      ✅ Using values.yaml for configurable deployments
+      ✅ Deploying applications using Helm
+      ✅ Performing Helm upgrades and rollbacks
+      ✅ Managing Kubernetes resources efficiently
 
-replicaCount: 5
+## 👨‍💻 Author
 
-Apply changes:
+## Dibyasha Sahu
 
-helm upgrade nginx-app .
-
-Verify:
-
-kubectl get pods
-
-Helm automatically updates the Kubernetes deployment.
-
-🔙 Helm Rollback
-
-Helm maintains deployment history.
-
-Check history:
-
-helm history nginx-app
-
-Rollback:
-
-helm rollback nginx-app 1
-🧹 Cleanup
-
-Remove Helm deployment:
-
-helm uninstall nginx-app
-
-Delete Kubernetes cluster:
-
-kind delete cluster --name nginx-cluster
-📚 Key Learnings
-
-Through this project, I learned:
-
-✅ Creating and managing Helm charts
-✅ Difference between Kubernetes YAML and Helm templates
-✅ Using values.yaml for configurable deployments
-✅ Deploying applications using Helm
-✅ Performing Helm upgrades and rollbacks
-✅ Managing Kubernetes resources efficiently
-
-👨‍💻 Author
-
-Dibyasha Sahu
-
-🔖 Tags
+## 🔖 Tags
 
 #DevOps #Kubernetes #Helm #Docker #CloudNative #AWS
